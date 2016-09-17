@@ -12,6 +12,7 @@
   "author": "shule517",
   "license": "ISC",
   "devDependencies": {
+    "cron": "^1.1.0",
     "mocha": "^3.0.2",
     "power-assert": "^1.4.1",
     "request": "^2.74.0",
