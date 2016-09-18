@@ -1,6 +1,8 @@
 /// <reference path="../typings/index.d.ts" />
 import Watcher from './watcher';
-import Push7 from './Push7';
+import Push7 from './push7';
+import Circle from './circle';
+
 try { require("source-map-support").install(); } catch (e) { /* empty */ }
 
 const app_no = 'e06fe4202348419eab837e2c092a0351';
@@ -14,12 +16,21 @@ let api = new Push7(app_no, api_key);
 let client = require('cheerio-httpcli');
 let fs = require('fs');
 
-let circles = [];
+const jsonFilePath = 'circles.json';
+
+let circlesBak:Circle[] = [];
+try {
+    circlesBak = JSON.parse(fs.readFileSync(jsonFilePath, 'utf8'));
+} catch (x){
+}
+
+let circles:Circle[] = [];
 // サークルカタログ取得
 client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, function (err, $, res) {
     console.log('----------------------------------');
     console.log(new Date());
 
+    // サークル情報を取得
     $('article').each(function (index) {
         console.log(index + '----------------------------------');
 
@@ -31,8 +42,12 @@ client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, 
                 updateTime = line.substring(index + '更新:'.length);
             }
         });
+
+        let circlePageUrl = $(this).find('.circle-col-cut a').attr('href');
+        let lastIndex = circlePageUrl.lastIndexOf('/');
         let circleInfo = {
-            channelName: $(this).find('h4 a').text(),
+            circleId: circlePageUrl.substring(lastIndex+1),
+            circleName: $(this).find('h4 a').text(),
             updateTime: updateTime,
             circlePageUrl: $(this).find('.circle-col-cut a').attr('href'),
             circlrImageUrl: $(this).find('.circle-col-cut img').attr('src'),
@@ -40,23 +55,28 @@ client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, 
         };
         circles.push(circleInfo);
 
-        console.log('channelName:' + circleInfo.channelName);
+        console.log('channelName:' + circleInfo.circleName);
         console.log('updateTime:' + circleInfo.updateTime);
         console.log('circlePageUrl:' + circleInfo.circlePageUrl);
         console.log('circlrImageUrl:' + circleInfo.circlrImageUrl);
         console.log('comment:' + circleInfo.comment);
     });
 
+    // // サークル情報の更新チェック
+    // circles.forEach((circle) => {
+    //     circlesBak();
+    // });
+
     // WebPush
     let circle = circles[0];
     let title = "きゃすけっと速報";
-    let body = "【" + circle.channelName + "】\nサークルが更新されました！";
+    let body = "【" + circle.circleName + "】\nサークルが更新されました！";
     let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
     let url = circle.circlePageUrl;
     api.push(title, body, icon, url);
 
     // サークル情報をファイル保存
-    fs.writeFile('circles.json', JSON.stringify(circles, null, '    '));
+    fs.writeFile(jsonFilePath, JSON.stringify(circles, null, '    '));
 });
 
 // let CronJob = require('cron').CronJob;
