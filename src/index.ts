@@ -8,18 +8,18 @@ const api_key = 'd2df831e7ba242cfb5b46161242a6a95';
 
 let api = new Push7(app_no, api_key);
 
-let title = "きゃすけっと速報";
-let body = "【しっかりシュールｃｈ】\nサークルが更新されました！";
-let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
-let url = "http://peercasket.herokuapp.com/2016a/circle/2715"
-
 // TEST 通知
 //api.push(title, body, icon, url);
 
 let client = require('cheerio-httpcli');
+let fs = require('fs');
 
+let circles = [];
 // サークルカタログ取得
 client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, function (err, $, res) {
+    console.log('----------------------------------');
+    console.log(new Date());
+
     $('article').each(function (index) {
         console.log(index + '----------------------------------');
 
@@ -38,6 +38,7 @@ client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, 
             circlrImageUrl: $(this).find('.circle-col-cut img').attr('src'),
             comment: $(this).find('pre').text()
         };
+        circles.push(circleInfo);
 
         console.log('channelName:' + circleInfo.channelName);
         console.log('updateTime:' + circleInfo.updateTime);
@@ -45,6 +46,17 @@ client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, 
         console.log('circlrImageUrl:' + circleInfo.circlrImageUrl);
         console.log('comment:' + circleInfo.comment);
     });
+
+    // WebPush
+    let circle = circles[0];
+    let title = "きゃすけっと速報";
+    let body = "【" + circle.channelName + "】\nサークルが更新されました！";
+    let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
+    let url = circle.circlePageUrl;
+    api.push(title, body, icon, url);
+
+    // サークル情報をファイル保存
+    fs.writeFile('circles.json', JSON.stringify(circles, null, '    '));
 });
 
 // let CronJob = require('cron').CronJob;
