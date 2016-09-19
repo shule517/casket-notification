@@ -1,0 +1,44 @@
+[
+    {
+        "channelName": "会長ch",
+        "channelId": "815DE296B4E8E052901DD2689155B0A4",
+        "tip": "153.161.22.33:7144",
+        "contactUrl": "http://jbbs.shitaraba.net/bbs/read.cgi/netgame/1010/1465919659/l50",
+        "genre": "きゃすけっと",
+        "detail": "自作ゲーム はいぱーすたちゅー - <Free>",
+        "relay": "47",
+        "listener": "53",
+        "bitrate": "896",
+        "type": "FLV",
+        "comment": "%E4%BC%9A%E9%95%B7ch",
+        "time": "1:56"
+    },
+    {
+        "channelName": "キング",
+        "channelId": "4EA90C41A3D5823F0FAAC82A15EF1B59",
+        "tip": "61.21.21.184:7144",
+        "contactUrl": "http://jbbs.shitaraba.net/bbs/read.cgi/game/51312/1471786876/l50",
+        "genre": "プログラミング",
+        "detail": "きゃすけっと中にRPGツクールmvでゲームを作ろう - <Open>",
+        "relay": "104",
+        "listener": "121",
+        "bitrate": "875",
+        "type": "WMV",
+        "comment": "%E3%82%AD%E3%83%B3%E3%82%B0",
+        "time": "5:34"
+    },
+    {
+        "channelName": "ヒョウモントカゲモドキのいる生活",
+        "channelId": "03C5DB030E15CB09078DF76562B73E66",
+        "tip": "122.131.230.164:7144",
+        "contactUrl": "http://jbbs.shitaraba.net/internet/21406/",
+        "genre": "きゃすけっと",
+        "detail": "Leopard gecko LIVE - <Free>",
+        "relay": "33",
+        "listener": "38",
+        "bitrate": "1041",
+        "type": "WMV",
+        "comment": "%E3%83%92%E3%83%A7%E3%82%A6%E3%83%A2%E3%83%B3%E3%83%88%E3%82%AB%E3%82%B2%E3%83%A2%E3%83%89%E3%82%AD%E3%81%AE%E3%81%84%E3%82%8B%E7%94%9F%E6%B4%BB",
+        "time": "67:53"
+    }
+]
