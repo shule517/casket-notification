@@ -6,8 +6,8 @@ import Channel from './channel';
 
 try { require("source-map-support").install(); } catch (e) { /* empty */ }
 
-const app_no = 'e06fe4202348419eab837e2c092a0351';
-const api_key = 'd2df831e7ba242cfb5b46161242a6a95';
+const app_no = '0f6743f32056498d9c478c77305d1888';
+const api_key = '47fc02c5ce094baf82bc1d31a49e19a1';
 
 let api = new Push7(app_no, api_key);
 
@@ -28,7 +28,7 @@ let watchCircle = () =>
 
     let circles:Circle[] = [];
     // サークルカタログ取得
-    client.fetch('http://peercasket.herokuapp.com/2016a/catalog', { q: 'node.js' }, function (err, $, res) {
+    client.fetch('http://peercasket.herokuapp.com/2017s/catalog', { q: 'node.js' }, function (err, $, res) {
         console.log('----------------------------------');
         console.log(new Date());
 
@@ -177,8 +177,8 @@ let watchChannel = () => {
 };
 
 // テスト実行
-//watchChannel();
-//watchCircle();
+watchChannel();
+watchCircle();
 
 let CronJob = require('cron').CronJob;
 let startJob = (time, action) => new CronJob({
@@ -190,32 +190,32 @@ let startJob = (time, action) => new CronJob({
 });
 
 // ５分おきにサークル更新チェック
-startJob("*/5 * * * *", () => watchCircle());
+startJob("*/1 * * * *", () => watchCircle());
 
 // ５分おきに配信チェック
 startJob("*/5 * * * *", () => watchChannel());
 
-// ３日目はじまった
-startJob("0 0 19 * *", () => {
-    let title = "きゃすけっと速報";
-    let body = "きゃすけっと三日目はじまりました！！\nあっという間に最終日です。\n悔いが残らないように楽しんでいきましょう！";
-    let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
-    let url = "http://peercasket.herokuapp.com/2016a/catalog";
-    api.push(title, body, icon, url);
-});
-// きゃすけっと終了まで＠３０分
-startJob("30 23 19 * *", () => {
-    let title = "きゃすけっと速報";
-    let body = "きゃすけっと終了まで残り３０分です！\n駆け込み勢のみなさん、まだあきらめないで！！";
-    let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
-    let url = "http://peercasket.herokuapp.com/2016a/catalog";
-    api.push(title, body, icon, url);
-});
-// きゃすけっと終了
-startJob("0 0 20 * *", () => {
-    let title = "きゃすけっと速報";
-    let body = "きゃすけっと しゅーりょー！！\nみなさん お疲れさまでした！\n2017年春もおたのしみに";
-    let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
-    let url = "http://peercasket.herokuapp.com/2016a/catalog";
-    api.push(title, body, icon, url);
-});
+// // ３日目はじまった
+// startJob("0 0 19 * *", () => {
+//     let title = "きゃすけっと速報";
+//     let body = "きゃすけっと三日目はじまりました！！\nあっという間に最終日です。\n悔いが残らないように楽しんでいきましょう！";
+//     let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
+//     let url = "http://peercasket.herokuapp.com/2017s/catalog";
+//     api.push(title, body, icon, url);
+// });
+// // きゃすけっと終了まで＠３０分
+// startJob("30 23 19 * *", () => {
+//     let title = "きゃすけっと速報";
+//     let body = "きゃすけっと終了まで残り３０分です！\n駆け込み勢のみなさん、まだあきらめないで！！";
+//     let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
+//     let url = "http://peercasket.herokuapp.com/2017s/catalog";
+//     api.push(title, body, icon, url);
+// });
+// // きゃすけっと終了
+// startJob("0 0 20 * *", () => {
+//     let title = "きゃすけっと速報";
+//     let body = "きゃすけっと しゅーりょー！！\nみなさん お疲れさまでした！\n2017年春もおたのしみに";
+//     let icon = "https://dashboard.push7.jp/uploads/fd91a7fdc2a542688778db4d79d50b18.jpg";
+//     let url = "http://peercasket.herokuapp.com/2017s/catalog";
+//     api.push(title, body, icon, url);
+// });
