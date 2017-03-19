@@ -135,7 +135,7 @@ let watchChannel = () => {
 
             if (relay >= -1) {
                 let target = (channel.channelName + channel.comment + channel.detail + channel.genre);
-                let isCascket = (target.indexOf('きゃすけっと') != -1);
+                let isCascket = (target.indexOf('きゃすけ') != -1);
                 if (isCascket) {
                     channels.push(channel);
                     console.log("きゃすけっと：" + channelName);
